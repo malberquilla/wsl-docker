@@ -4,13 +4,8 @@ parse_git_branch() {
 
 export PS1="[\A] \[\033[38;5;32m\]\u@\H \[\033[38;5;214m\]\w \[\033[38;5;79m\]$(parse_git_branch)\[\033[38;5;11m\]\n\$ \e[m"
 
-DOCKER_DIR="/mnt/wsl/docker"
-DOCKER_SOCK="$DOCKER_DIR/docker.sock"
-export DOCKER_HOST="unix://$DOCKER_SOCK"
+export DOCKER_HOST="unix:///mnt/wsl/docker/docker.sock"
 RUNNING=`ps aux | grep dockerd | grep -v grep`
 if [ -z "$RUNNING" ]; then
-    #mkdir -pm o=,ug=rwx "$DOCKER_DIR"
-    #chgrp docker "$DOCKER_DIR"
-    #nohup dockerd < /dev/null > $DOCKER_DIR/dockerd.log 2>&1
     dockerd > /dev/null 2>&1 &
 fi

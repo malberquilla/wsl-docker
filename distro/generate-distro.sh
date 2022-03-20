@@ -4,7 +4,7 @@ USERPROFILE="$(powershell.exe -c 'Write-Host -NoNewline $env:USERPROFILE')"
 DUMP=wsl-docker.tar.gz
 TAG_NAME=wsl-docker
 
-docker build -t $TAG_NAME -f ./distro/Dockerfile .
+docker build -t $TAG_NAME -f ./Dockerfile .
 CONTAINER_ID=$(docker create $TAG_NAME)
 docker export $CONTAINER_ID | gzip > $DUMP
 docker container rm $CONTAINER_ID
