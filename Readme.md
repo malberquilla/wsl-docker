@@ -33,7 +33,7 @@ groupadd -g 36257 docker
 Add your user to the group.
 
 ```bash
-usermod -a docker user
+usermod -aG docker $(whoami)
 ```
 
 Add the DOCKER_HOST variable. It's recommended add following line in you `.bashrc` or `.profile` user home file.
