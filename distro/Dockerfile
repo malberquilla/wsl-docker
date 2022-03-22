@@ -16,6 +16,7 @@ RUN addgroup $(whoami) docker && groupmod -g ${DOCKER_GROUP_ID} docker
 
 ARG DOCKER_DIR=/mnt/wsl/docker
 RUN mkdir -pm o=,ug=rwx ${DOCKER_DIR} && chgrp docker ${DOCKER_DIR}
+RUN touch ${DOCKER_DIR}/.empty
 
 ENV ENV="/etc/profile"
 
