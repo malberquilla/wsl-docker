@@ -1,5 +1,14 @@
 # WSL docker
 
+This wsl distro pretend to facilite the docker installation. To install, download [latest release](https://github.com/malberquilla/wsl-docker/releases/latest) and import the distro into WSL 2.
+
+```powershell
+# Powershell
+
+wsl --import wsl-docker $env:USERPROFILE\wsl-docker wsl-docker.tar.gz --version 2
+wsl -d wsl-docker
+```
+
 ## Use from another distro
 
 Install docker client
@@ -43,3 +52,26 @@ export DOCKER_HOST="unix:///mnt/wsl/docker/docker.sock"
 ```
 
 Restart the distro.
+
+## Running docker from Windows
+
+You can add powershell function that call the wsl-docker. To locate the user powershell profile locations:
+
+```powershell
+$PROFILE | Format-List -Force
+```
+
+If the profile.ps1 don't exists, create it and add following functions:
+
+```powershell
+$DOCKER_DISTRO = "wsl-docker"
+function docker {
+    wsl -d $DOCKER_DISTRO docker -H unix:///mnt/wsl/shared-docker/docker.sock @Args
+}
+
+function docker-compose {
+    wsl -d $DOCKER_DISTRO docker -H unix:///mnt/wsl/shared-docker/docker.sock compose @Args
+}
+```
+
+Thanks to [Jonathan Bowman](https://dev.to/bowmanjd) for the article [install docker on windows wsl without docker desktop](https://dev.to/bowmanjd/install-docker-on-windows-wsl-without-docker-desktop-34m9)
